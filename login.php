@@ -150,7 +150,7 @@ else if($_POST['submit']=='Register')
 		$_POST['username'] = mysql_real_escape_string($_POST['username']);
 		
 		
-		mysql_query("	INSERT INTO tz_members(usr,pass,email,regIP,dt)
+		mysql_query("INSERT INTO tz_members(usr,pass,email,regIP,dt)
 						VALUES(
 						
 							'".$_POST['username']."',
@@ -163,43 +163,21 @@ else if($_POST['submit']=='Register')
 		
 		if(mysql_affected_rows($link)==1)
 		{
-			// $html = 'Your password is: '.$email."<br />";
-			// send_mail('unisms@usi.ch',
-			// 			$_POST['email'],
-			// 			'UNISMS - informations',
-			// 			$html);
-
-      $to  = $_POST['email']; 
+		  $uname = $_POST['username'];
+      $uname = mysql_real_escape_string($uname);
       
-      // subject
-      $subject = 'UNIsms Account Registration';
+		  $query_result = mysql_query("SELECT id FROM tz_members WHERE usr='$uname'");
+      $row = mysql_fetch_array($query_result);
+		  $_SESSION['usr']=$uname;
+      $_SESSION['id'] = $row['id'];
+      $_SESSION['mail'] = $_POST['email'];
+      $_SESSION['rememberMe'] = "false";
       
-      // message
-      $message = '
-      <html>
-      <head>
-        <title>UNIsms Registration</title>
-      </head>
-      <body>
-        <h1>UNIsms Registration</h1>
-        <p>TEEEST!</p>
-      </body>
-      </html>
-      ';
+      // Store some data in the session
       
-      // To send HTML mail, the Content-type header must be set
-      $headers  = 'MIME-Version: 1.0' . "\r\n";
-      $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-      // Additional headers
-      $headers .= 'From: UNIsms <unisms@usi.ch>' . "\r\n";
-      $headers .= 'Reply-To: marcello.romanelli@usi.ch' . "\r\n";
-      $headers .= 'Bcc: marcello.romanelli@usi.ch' . "\r\n";
-
-
-      // Mail it
-      mail($to, $subject, $message, $headers);
-			$_SESSION['msg']['reg-success']='We sent you an email with all the informations!';
+      setcookie('tzRemember',"false");
+      // TODO: SEND EMAIL
+			
 		}
 		else $err[]='This username is already taken!';
 	}
