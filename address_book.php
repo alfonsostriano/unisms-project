@@ -73,6 +73,8 @@
         var contacts_list = document.getElementById('contacts_list');
         var add_contact = document.getElementById('add_contact');
         add_contact.style.display = "inline";
+        var image = document.getElementById('add_contact_button');
+        image.src = "img/add_clicked";
     }
     
 
@@ -194,7 +196,7 @@
         </div>
     </div> 
     <div id="AB_footer">
-        <img src="img/add.png" onclick="addContact()">
+        <div id="add_contact_button" src="img/add.png"onclick="addContact()"><div>
     </div>
     <div id="add_contact">
         <form method="POST">
