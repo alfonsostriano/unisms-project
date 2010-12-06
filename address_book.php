@@ -72,7 +72,6 @@
     function addContact() {
         var contacts_list = document.getElementById('contacts_list');
         var add_contact = document.getElementById('add_contact');
-        contacts_list.style.display = "none";
         add_contact.style.display = "inline";
     }
     
@@ -190,24 +189,24 @@
                 echo "</div>";
             }
             
-            include 'google.php';   
+            include 'google.php';
         ?>
         </div>
+    </div> 
+    <div id="AB_footer">
+        <img src="img/add.png" onclick="addContact()">
     </div>
-    
     <div id="add_contact">
         <form method="POST">
-            <input id="names" name="names"/>
+            <p>
             <label for="names">Name: </label>
-            <input id="phone" name="phone"</>
+            <input id="names" name="names"/>
+            </p>
+            <p>
             <label for="phone">Phone: </label>
-            <button onclick="addcontactdatabase()">Ok</button>
+            <input id="phone" name="phone"/>
+            </p>
+            <button onclick="addcontactdatabase()">Add</button>
         </form>
-    </div>
-    
-
-    <div id="remove_contact"></div>
-    <div id="AB_footer">
-        <button onclick="addContact()">Add a new contact</button>
     </div>
 </div>
