@@ -103,7 +103,6 @@
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
-                document.getElementById("contacts_list").innerHTML += request;
             }
         }
         var queryString = "?names=" + names + "&phone=" + phone;
