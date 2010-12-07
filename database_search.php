@@ -19,12 +19,14 @@ $search = mysql_real_escape_string($search);
 $query = "SELECT * FROM contacts WHERE names LIKE '%$search%' AND owner = '$id'";
 	//Execute query
 $qry_result = mysql_query($query) or die(mysql_error());
-$string = "";
 while ($list = mysql_fetch_array($qry_result)) {
     $name = $list['names'];
     $id = $list['id'];
-    $string .= "<h4 onclick='getNumber(".$id.")'>" . $name . "</h4>";
+  echo "<div id='contact'>";
+                  echo "<h4 id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h4>";
+                  echo "<img id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/>";   
+                  echo "</div>";
 }
-echo $string;
+
 
 ?>
