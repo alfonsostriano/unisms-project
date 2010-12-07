@@ -103,7 +103,7 @@
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
-                alert(names);
+                document.getElementById("contacts_list").innerHTML += request;
             }
         }
         var queryString = "?names=" + names + "&phone=" + phone;
@@ -187,7 +187,6 @@
                 echo "<div id='contact'>";
                 echo "<h4 id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h4>";
                 echo "<img id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/>";   
-                //echo "<h4 onclick='remove_contact(".$id.")'> REMOVE </h4>";
                 echo "</div>";
             }
             
@@ -196,7 +195,9 @@
         </div>
     </div> 
     <div id="AB_footer">
-        <div id="add_contact_button" src="img/add.png"onclick="addContact()"><div>
+        <div id="add_contact_button">
+        <img src="img/add.png"onclick="addContact()" />
+        </div> 
     </div>
     <div id="add_contact">
         <form method="POST">

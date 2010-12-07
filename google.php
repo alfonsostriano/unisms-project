@@ -40,6 +40,7 @@ require_once 'Zend/Loader.php';
                   
                   // perform query and get result feed
                   $query = new Zend_Gdata_Query('http://www.google.com/m8/feeds/contacts/default/full');
+                  $query->maxResults = 1000;
                   $feed = $gdata->getFeed($query);
                   
                   // parse feed and extract contact information
