@@ -221,10 +221,13 @@ require("login.php");
                             }
                             else{
 ?>
-  <div id="welcome">
-  <h2>Welcome to UNIsms!</h2>
-  <h3>Please login or register</h3>
-  </div>
+  <div id="facebook">
+<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
+<script type="text/javascript">FB.init("4cdb821df2c0741721f683c820581a78");</script>
+<fb:fan profile_id="132505266801785" stream="1" connections="10" width="450"></fb:fan>
+<div style="font-size:8px; padding-left:10px">
+<a href="http://www.facebook.com/pages/SMSwitch-SMS-Gratis-per-studenti-USI/132505266801785">SMSwitch</a> on Facebook</div>
+</div>
 
 <?php
 }
