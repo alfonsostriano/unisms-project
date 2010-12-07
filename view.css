@@ -9,7 +9,7 @@ body{
     margin-top:15px;
     margin-bottom: 15px !important;
     font:76% sans-serif, verdana;
-        background-color: #729fcf;
+    background: #222 url(img/bg.png) repeat-x;
 }
 
 #page{
