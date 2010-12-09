@@ -210,6 +210,6 @@
             <label for="phone">Phone: </label>
             <input id="phone" name="phone"/>
             </p>
-            <button id="add_button" "onclick="addcontactdatabase()">Add</button>
+            <button id="add_button" onclick="addcontactdatabase()">Add</button>
     </div>
 </div>
