@@ -70,18 +70,26 @@
     }
 
     function addContact() {
-        var contacts_list = document.getElementById('contacts_list');
+        var image = document.getElementById('contact_button');
         var add_contact = document.getElementById('add_contact');
-        add_contact.style.display = "inline";
-        var image = document.getElementById('add_contact_button');
-        image.src = "img/add_clicked";
+        if(image.alt == 0) {
+             add_contact.style.display = "inline";
+             image.src = "img/add_clicked.png";
+             image.alt = "1";
+        } else {
+            add_contact.style.display = "none";
+            image.src = "img/add.png";
+            image.alt = "0";
+        }
     }
     
 
     function addcontactdatabase() {
         var ajaxRequest;  // The variable that makes Ajax possible!
-        var names = document.getElementById('names').value
-        var phone = document.getElementById('phone').value
+        var names = document.getElementById('names').value;
+        var phone = document.getElementById('phone').value;
+        document.getElementById('names').value = "";
+        document.getElementById('phone').value = "";
         try {
             // Opera 8.0+, Firefox, Safari
             ajaxRequest = new XMLHttpRequest();
@@ -103,10 +111,11 @@
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
+                document.getElementById('contacts_list').innerHTML = request;
             }
         }
         var queryString = "?names=" + names + "&phone=" + phone;
-        ajaxRequest.open("POST", "database_add.php" + queryString, true);
+        ajaxRequest.open("GET", "database_add.php" + queryString, true);
         ajaxRequest.send(null);
     }
 
@@ -157,10 +166,6 @@
 
 <div id="add_book">
     <div id="AB_header">
-        <div id="change_view">
-<!--            <button id="full_view" onClick="full_view()">Full View</button>-->
-<!--            <button id="contact_view" onClick="contact_view()">Contact View</button>-->
-        </div>
         <div id="search">
             <input type="text" id="searchbox" name="searchbox" value="  ...search" onblur='if(this.value == "") {this.value = "  ...search";search("")}' onclick='if(this.value == "  ...search"){this.value = ""}' onkeyup="search(this.value)"/>
         </div>
@@ -194,12 +199,9 @@
         </div>
     </div> 
     <div id="AB_footer">
-        <div id="add_contact_button">
-        <img src="img/add.png"onclick="addContact()" />
-        </div> 
+        <img id="contact_button" src="img/add.png" alt="0" onclick="addContact()" />
     </div>
     <div id="add_contact">
-        <form method="POST">
             <p>
             <label for="names">Name: </label>
             <input id="names" name="names"/>
@@ -208,7 +210,6 @@
             <label for="phone">Phone: </label>
             <input id="phone" name="phone"/>
             </p>
-            <button onclick="addcontactdatabase()">Add</button>
-        </form>
+            <button id="add_button" "onclick="addcontactdatabase()">Add</button>
     </div>
 </div>
