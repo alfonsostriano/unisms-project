@@ -234,7 +234,7 @@
         </div>
     </div> 
     <div id="AB_footer">
-        <img title="Open add contact" id="contact_button" src="img/add.png" alt="0" onclick="addContact()" />
+        <img title="Open add contact" id="contact_button" src="img/add.pn" alt="0" onclick="addContact()" />
         <img title="Delete all contacts" id="contact_button" src="img/trash.png" alt="trash" onclick="remove_all_contacts()"/>
     </div>
     <div id="add_contact">
