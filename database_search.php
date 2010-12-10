@@ -14,7 +14,6 @@ $search = $_GET['search'];
 	// Escape User Input to help prevent SQL Injection
 $search = mysql_real_escape_string($search);
 
-
 	//build query
 $query = "SELECT * FROM contacts WHERE names LIKE '%$search%' AND owner = '$id'";
 	//Execute query
@@ -24,7 +23,8 @@ while ($list = mysql_fetch_array($qry_result)) {
     $id = $list['id'];
   echo "<div id='contact'>";
                   echo "<h4 id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h4>";
-                  echo "<img id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/>";   
+                  echo "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
+                  echo "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/>";
                   echo "</div>";
 }
 

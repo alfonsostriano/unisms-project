@@ -370,6 +370,15 @@ h1{
     overflow: auto;
   }
 
+ #contact_edit {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 70%;
+    height: 60%;
+    display: none;
+    float: left;
+}
+
  #add_contact {
     font-size: medium;
     margin: 0 0 0 2em;
@@ -397,14 +406,6 @@ h1{
 #contacts_list h4:hover {
     background: #cfe7fa;
 
-}
-#contact_edit {
-    padding: 1em 0.5em 0.5em 0.5em;
-    border: 1.5px solid white;
-    width: 32.5%;
-    height: 70%;
-    display: none;
-    float: right;
 }
 
 #AB_footer {
@@ -456,8 +457,14 @@ h1{
 }
 
 #delete_button {
-  margin-right: 20px;
+  margin-right: 10px;
   margin-top: 10px;
+  float: right;
+}
+
+#edit_button {
+  margin-right: 5px;
+  margin-top: 5px;
   float: right;
 }
 
@@ -474,7 +481,7 @@ h1{
 }
 
 #contact_name {
-  width: 75% !important;
+  width: 70% !important;
   float: left;
 }
 
@@ -500,4 +507,13 @@ h1{
 .slide-out-div form button {
     margin-top: 8%;
     margin-left: 3px;
+}
+
+#confirm_edit {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+#edit_id {
+    display: none;
 }
