@@ -362,8 +362,7 @@ h1{
 }
 #contacts_list {
     font-size: medium;
-    margin-left: 10px;
-    width: 95%;
+    width: 100%;
     height: 75%;
     display: inline;
     float: left;
@@ -399,8 +398,9 @@ h1{
 #contacts_list h4{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
-    margin: 10px 5px 5px 5px;
-    width: 80%;
+    width: 100%;
+    margin-top: 7px;
+    margin-bottom: 0;
 }
 
 #contacts_list h4:hover {
@@ -452,20 +452,12 @@ h1{
   margin-right: auto;
 }
 
-#contact {
-  display: inline;
-}
 
 #delete_button {
-  margin-right: 10px;
-  margin-top: 10px;
-  float: right;
+    margin-bottom: 4px;
 }
 
 #edit_button {
-  margin-right: 5px;
-  margin-top: 5px;
-  float: right;
 }
 
 #delete_button:hover{
@@ -481,15 +473,8 @@ h1{
 }
 
 #contact_name {
-  width: 70% !important;
-  float: left;
 }
 
-.slide-out-div p {
-    width: 100%;
-    margin-right: 0.5;
-    margin-left: 0;
-}
 .slide-out-div input{
     float: right;
     display: inline;
@@ -516,4 +501,17 @@ h1{
 
 #edit_id {
     display: none;
+}
+
+.msg_list {
+}
+.msg_head {
+    width: 91%;
+    padding-left: 10px;
+    margin: 0;
+    background-color:#FFCCCC;
+}
+.msg_body {
+    width: 90%;
+    padding-left: 10px;
 }

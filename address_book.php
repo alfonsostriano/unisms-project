@@ -196,6 +196,17 @@
 
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	//hide the all of the element with class msg_body
+	$(".msg_body").hide();
+	//toggle the componenet with class msg_body
+	$(".msg_head").click(function(){
+		$(this).next(".msg_body").slideToggle(300);
+	});
+});
+</script>
+
 <div id="add_book">
     <div id="AB_header">
         <div id="search">
@@ -219,32 +230,24 @@
         ?>
 
         <div id="contacts_list">
-        <?php
-            while ($list = mysql_fetch_array($list_retrieve)) {
-                $name = $list['names'];
-                $id = $list['id'];
-                echo "<div id='contact'>";
-                echo "<h4 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h4>";
-                echo "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
-                echo "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/>";
-                echo "</div>";
-            }  
-            include 'google.php';
-        ?>
-        </div>
-        <div id="contact_edit">
-            <p>
-            <label for="names">Name: </label>
-            <input title='Insert contact name' id="name_edit" name="names"/>
-            </p>
-            <p>
-            <label for="phone">Phone: </label>
-            <input title='Insert contact number' id="phone_edit" name="phone"/>
-            </p>
-            <div id="edit_id"></div>
-            <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
-        </div>
-    </div> 
+                 <?php
+                    require_once('address_book_gen.php');
+                 ?>
+            </div>
+                <div id="contact_edit">
+                    <p>
+                    <label for="names">Name: </label>
+                    <input title='Insert contact name' id="name_edit" name="names"/>
+                    </p>
+                    <p>
+                    <label for="phone">Phone: </label>
+                    <input title='Insert contact number' id="phone_edit" name="phone"/>
+                    </p>
+                    <div id="edit_id"></div>
+                    <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
+                </div>
+            </div>
+    </div>
     <div id="AB_footer">
         <img title="Open add contact" id="contact_button" src="img/add2.png" alt="0" onclick="addContact()" />
         <img title="Delete all contacts" id="contact_button" src="img/trash.png" alt="trash" onclick="remove_all_contacts()"/>
