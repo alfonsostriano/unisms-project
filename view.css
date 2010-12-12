@@ -383,6 +383,7 @@ h1{
     margin: 0 0 0 2em;
     padding-right: 2em;
     height: 110px;
+    width: 90%;
     display: inline;
     float: left;
     background: rgba(196, 201, 202, 0.4);
@@ -505,6 +506,7 @@ h1{
 
 .msg_list {
 }
+
 .msg_head {
     width: 91%;
     padding-left: 10px;
