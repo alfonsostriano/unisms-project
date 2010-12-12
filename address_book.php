@@ -147,6 +147,8 @@
             image.title = "Open add contact";
         }
     }
+    
+    
 
     //function to handle the add contact request
     function addcontactdatabase() {
@@ -167,6 +169,21 @@
         ajaxRequest.open("GET", "database_add.php" + queryString, true);
         ajaxRequest.send(null);
     }
+    
+    function add_fav(name) {
+        var ajaxRequest = build_ajaxRequest();
+        // Create a function that will receive data sent from the server
+        ajaxRequest.onreadystatechange = function() {
+            if(ajaxRequest.readyState == 4) {
+                var request = ajaxRequest.responseText;
+                //document.getElementById('contacts_list').innerHTML = request;
+                alert(request);
+            }
+        }
+        var queryString = "?nameid=" + name;
+        ajaxRequest.open("GET", "database_add_fav.php" + queryString, true);
+        ajaxRequest.send(null);
+      }
 
     //function to handle the search request
     function search(searchtext) {
