@@ -168,6 +168,11 @@
         var queryString = "?names=" + names + "&phone=" + phone;
         ajaxRequest.open("GET", "database_add.php" + queryString, true);
         ajaxRequest.send(null);
+          $(".msg_body").hide();
+        //toggle the componenet with class msg_body
+        $(".msg_head").click(function(){
+          $(this).next(".msg_body").slideToggle(300);
+        });
     }
     
     function add_fav(name) {
@@ -176,13 +181,17 @@
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
-                //document.getElementById('contacts_list').innerHTML = request;
-                alert(request);
+                document.getElementById('contacts_list').innerHTML = request;
             }
         }
         var queryString = "?nameid=" + name;
         ajaxRequest.open("GET", "database_add_fav.php" + queryString, true);
         ajaxRequest.send(null);
+          $(".msg_body").hide();
+      //toggle the componenet with class msg_body
+      $(".msg_head").click(function(){
+        $(this).next(".msg_body").slideToggle(300);
+      });
       }
 
     //function to handle the search request
@@ -250,7 +259,6 @@ $(document).ready(function(){
                  <?php
                     require_once('address_book_gen.php');
                  ?>
-            </div>
                 <div id="contact_edit">
                     <p>
                     <label for="names">Name: </label>
@@ -263,7 +271,7 @@ $(document).ready(function(){
                     <div id="edit_id"></div>
                     <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
                 </div>
-            </div>
+        </div>
     </div>
     <div id="AB_footer">
         <img title="Open add contact" id="contact_button" src="img/add2.png" alt="0" onclick="addContact()" />

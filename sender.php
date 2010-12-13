@@ -63,6 +63,22 @@ if(!defined('INCLUDE_CHECK')) die('You are not allowed to execute this file dire
 
 </div>
 
+ <div class="notification info"> 
+            <span></span> 
+             <div class="text">
+             <?php
+                $query  = "SELECT * FROM comunications ORDER BY id DESC LIMIT 1";
+                $query_result = mysql_query($query);
+                $result = mysql_fetch_array($query_result);
+                $last_comunication = $result['contents'];
+                echo "<p><strong>Information:</strong>" . $last_comunication ."</p>"; 
+                
+             ?>
+             
+
+            </div> 
+          </div> 
+          
 <div class="slide-out-div">
     <a class="handle" href="#">Content</a>
     <?php
