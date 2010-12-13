@@ -1,5 +1,26 @@
 <?php
 require("login.php");
+require 'facebook/facebook.php';
+
+// Create our Application instance (replace this with your appId and secret).
+$facebook = new Facebook(array(
+ 'appId'  => '165794976794246',
+ 'secret' => 'aae8c39f79b500e362a4d4a265258ecc',
+ 'cookie' => true,
+));
+
+$session = $facebook->getSession();
+
+$me = null;
+// Session based API call.
+if ($session) {
+ try {
+   $uid = $facebook->getUser();
+   $me = $facebook->api('/me');
+ } catch (FacebookApiException $e) {
+   error_log($e);
+ }
+}
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,7 +31,8 @@ require("login.php");
         <link rel="stylesheet" type="text/css" href="view.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="demo.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="login_panel/css/slide.css" media="screen" />
-
+  
+        
         <link rel="apple-touch-icon" href="img/icon.png"/>
         <link rel="shortcut icon" href="img/favicon.ico"/>
 
@@ -20,6 +42,7 @@ require("login.php");
         <script type="text/javascript" src="login_panel/js/slide.js" type="text/javascript"></script>
         <script type="text/javascript" src="http://tab-slide-out.googlecode.com/files/jquery.tabSlideOut.v1.3.js"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        
 
         <script type="text/javascript">
             $( function() {
@@ -38,6 +61,8 @@ require("login.php");
 
             });
         </script>
+        
+        
 
 
     </head>
@@ -50,6 +75,26 @@ require("login.php");
                    
                     
                     <?php
+                    if($me && !$_SESSION['id']){
+
+                         $query  = "SELECT FBid FROM tz_members";
+                         $query_result = mysql_query($query);
+                         $result = mysql_fetch_row($query_result);
+                        if (in_array($me[id], $result)) {
+                        if(!strpos($url,'iframe')){
+                        echo '<script language="javascript">alert("Ti sei collegato automaticamente con l\account facebook di '.$me[name].'. Per collegarti con un altro account, fai il logout da facebook.")</script>;';
+                          $query  = "SELECT usr, id, email, save FROM tz_members WHERE FBid='{$me[id]}'";
+                                               $query_result = mysql_query($query);
+                                               $result = mysql_fetch_row($query_result);
+                        $_SESSION['usr'] = $result[0];
+                        $_SESSION['id'] = $result[1];
+                        $_SESSION['mail'] = $result[2];
+                        $_SESSION['rememberMe'] = $result[3];}
+                        
+                        }
+                                                 
+                        
+                        }
                     if (!$_SESSION['id']):
                     ?>
                         <div class="left">
@@ -70,6 +115,7 @@ require("login.php");
 
                         <?php
                         // Show if there are errors
+                        
                         if ($_SESSION['msg']['login-err']) {
                             echo '<div class="err">' . $_SESSION['msg']['login-err'] . '</div>';
                             unset($_SESSION['msg']['login-err']);
@@ -86,6 +132,13 @@ require("login.php");
                             <div class="clear"></div>
                             <input type="submit" name="submit" value="Login" class="bt_login" />
                         </form>
+                        <?php $url = $_SERVER['REQUEST_URI'];
+                    if(!strpos($url,'iframe') && !$me){?>
+                       <div>
+                      <fb:login-button></fb:login-button>
+                       </div>
+                    
+                       <?php }?>
                     </div>
 
                     <div class="left right">
@@ -121,6 +174,10 @@ require("login.php");
 
 <?php
                         else:
+                          if($me){
+                          mysql_query("UPDATE tz_members SET FBid ='$me[id].' WHERE usr='{$_SESSION['usr']}'");
+
+                          }
 ?>
 
                         <div class="left">
@@ -231,7 +288,31 @@ require("login.php");
 
 <?php
 }
-?>
+?>  
+  <div id="fb-root"></div>
+   <script>
+     window.fbAsyncInit = function() {
+       FB.init({
+         appId   : '<?php echo $facebook->getAppId(); ?>',
+         session : <?php echo json_encode($session); ?>, // don't refetch the session when PHP already has it
+         status  : true, // check login status
+         cookie  : true, // enable cookies to allow the server to access the session
+         xfbml   : true // parse XFBML
+       });
+
+       // whenever the user logs in, we refresh the page
+       FB.Event.subscribe('auth.login', function() {
+         window.location.reload();
+       });
+     };
+
+     (function() {
+       var e = document.createElement('script');
+       e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+       e.async = true;
+       document.getElementById('fb-root').appendChild;
+     }());
+   </script>
 
 
     </body>

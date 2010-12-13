@@ -46,35 +46,11 @@ require '../connect.php';
     <body>
 
         <div id="container">
-            <div id="bgwrap">
-                <div id="primary_left">
-
-                    <div id="logo">
-                        <a href="http://hello.amnesio.com/dashboard.html" title="Dashboard">
-                        <img src="./assets/logo.png" alt="" /></a>
-                    </div> <!-- logo end -->
-                    <div id="menu">
-                        <!-- navigation menu -->
-                        <ul>
-                            <li class="current">
-                                <a href="#" class="dashboard">
-                                <img src="./assets/icons/small_icons_3/dashboard.png" alt="" /><span class="current">Dashboard</span></a>
-                            </li>
-                            <li>
-                                <a href="users.php">
-                                <img src="./assets/icons/small_icons_3/users.png" alt="" /><span>Users</span></a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                <img src="./assets/icons/small_icons_3/settings.png" alt="" /><span>Settings</span></a>
-                            </li>
-                        </ul>
-                    </div> <!-- navigation menu end -->
-                </div> <!-- sidebar end -->
+                
                 <div id="primary_right">
                     <div class="inner">
 
-                        <h1>Dashboard Elements</h1>
+                        <h1>UNIsms Admin</h1>
                         <ul class="dash">
 
                             <li class="fade_hover tooltip" title="Post a new comunication">
@@ -97,7 +73,7 @@ require '../connect.php';
                                  }
                                 ?>
                                 </span>
-                                <a href="#">
+                                <a href="users.php">
                                 <img src="./assets/icons/dashboard/54.png" alt="" />
                                 <span>Users</span>
                                 </a>

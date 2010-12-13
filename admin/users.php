@@ -7,7 +7,7 @@ require '../connect.php';
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <title>Hello! Admin</title>
+        <title>UNIsms Admin</title>
         <link type="text/css" href="./style.css" rel="stylesheet" /> <!-- the layout css file -->
         <link type="text/css" href="./css/jquery.cleditor.css" rel="stylesheet" />
 
@@ -46,39 +46,15 @@ require '../connect.php';
     <body>
 
         <div id="container">
-            <div id="bgwrap">
-                <div id="primary_left">
-
-                    <div id="logo">
-                        <a href="http://hello.amnesio.com/dashboard.html" title="Dashboard">
-                        <img src="./assets/logo.png" alt="" /></a>
-                    </div> <!-- logo end -->
-                    <div id="menu">
-                        <!-- navigation menu -->
-                        <ul>
-                            <li>
-                                <a href="dashboard.php" class="dashboard">
-                                <img src="./assets/icons/small_icons_3/dashboard.png" alt="" /><span class="current">Dashboard</span></a>
-                            </li>
-                            <li class="current">
-                                <a href="users.php">
-                                <img src="./assets/icons/small_icons_3/users.png" alt="" /><span>Users</span></a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                <img src="./assets/icons/small_icons_3/settings.png" alt="" /><span>Settings</span></a>
-                            </li>
-                        </ul>
-                    </div> <!-- navigation menu end -->
-                </div> <!-- sidebar end -->
+          
                 <div id="primary_right">
                     <div class="inner">
 
-                        <h1>Dashboard Elements</h1>
+                        <h1>UNIsms Admin</h1>
                         <ul class="dash">
 
                             <li class="fade_hover tooltip" title="Post a new comunication">
-                                <a href="#">
+                                <a href="comunications.php">
                                 <img src="./assets/icons/dashboard/2.png" alt="" />
                                 <span>News</span>
                                 </a>
@@ -97,7 +73,7 @@ require '../connect.php';
                                  }
                                 ?>
                                 </span>
-                                <a href="#">
+                                <a href="users.pgp">
                                 <img src="./assets/icons/dashboard/54.png" alt="" />
                                 <span>Users</span>
                                 </a>
@@ -110,7 +86,7 @@ require '../connect.php';
                             </li>
                            
                             
-                            <li class="fade_hover tooltip dialog_link" title="End current session">
+                            <li class="fade_hover tooltip" title="End current session">
                                 <a href="#">
                                 <img src="./assets/icons/dashboard/118.png" alt="" />
                                 <span>Logout</span>
@@ -131,7 +107,7 @@ require '../connect.php';
 
                             
 
-                            <h1>Recent users</h1>
+                            <h1>Users</h1>
                             <table class="normal tablesorter fullwidth">
                                 <thead>
                                     <tr>
