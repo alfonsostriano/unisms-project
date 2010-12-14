@@ -23,25 +23,30 @@
         return ajaxRequest;
     }
 
-    function get_innerHTML_request(url,domid) {
+    function get_innerHTML_request(url,domid,ready) {
         var ajaxRequest = build_ajaxRequest();
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
                 document.getElementById(domid).innerHTML = request;
-                $(document).ready(function(){set_ready();});
+                if(ready) {
+                    $(document).ready(function(){set_ready();});
+                }
             }
         }
         ajaxRequest.open("GET", url, true);
         ajaxRequest.send(null);
     }
-    function get_value_request(url,domid) {
+
+    function get_value_request(url,domid,ready) {
         var ajaxRequest = build_ajaxRequest();
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
                 document.getElementById(domid).value = request;
-                $(document).ready(function(){set_ready();});
+                if(ready) {
+                    $(document).ready(function(){set_ready();});
+                }
             }
         }
         ajaxRequest.open("GET", url, true);
@@ -50,28 +55,29 @@
 
     //function to handle the search request
     function search(searchtext) {
-        get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list");
+        get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list",true);
         document.getElementById("contacts_list").style.padding = '0 0 0 20px';
     }
 
     function add_fav(name) {
-        get_innerHTML_request("database_add_fav.php" + "?nameid=" + name, "contacts_list");
-        set_ready();
+        get_innerHTML_request("database_add_fav.php" + "?nameid=" + name, "contacts_list",true);
     }
 
     //function to handle the remove contact request
     function remove_contact(name){
-        get_innerHTML_request("database_remove.php" + "?nameid=" + name, "contacts_list");
-        set_ready();
+        get_innerHTML_request("database_remove.php" + "?nameid=" + name, "contacts_list",true);
     }
 
     //function to handle the remove all contacts request
     function remove_all_contacts() {
         var answer = confirm("Delete all Contacts?")
         if(answer) {
-            get_innerHTML_request("database_removeAll.php", "contacts_list");
-            set_ready();
+            get_innerHTML_request("database_removeAll.php", "contacts_list",true);
         }
+    }
+
+    function generate_drop_down() {
+        get_innerHTML_request("database_droplist.php", "drop_down_list",false);
     }
 
     //function to handle the add contact request
@@ -79,12 +85,22 @@
         var names = document.getElementById('names').value;
         var phone = document.getElementById('phone').value;
 
-        get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone,"contacts_list");
+        get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone,"contacts_list",true);
         document.getElementById('names').value = "";
         document.getElementById('phone').value = "";
-        set_ready();
+        document.getElementById('new_group').value = "";
     }
 
+    //function to add the group input in the add form
+    function add_group_input() {
+        var select = document.getElementById('select_group');
+        var group_choice = select.options[select.selectedIndex].value;
+        if (group_choice == 'other') {
+            document.getElementById('add_form_new_group').style.display = "inline";
+        } else {
+            document.getElementById('add_form_new_group').style.display = "none";
+        }
+    }
     //Function to handle the edit request
     function submit_contact_edit() {
         var name_edit = document.getElementById("name_edit").value;
@@ -92,8 +108,7 @@
         var edit_id = document.getElementById("edit_id").innerHTML;
         document.getElementById("message_list").style.display = "inline";
         document.getElementById("contact_edit").style.display = "none";
-        get_innerHTML_request("database_edit.php" + "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id, "contacts_list");
-        set_ready();
+        get_innerHTML_request("database_edit.php" + "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id, "contacts_list",true);
     }
 
     function edit_contact(id) {
@@ -101,9 +116,8 @@
         document.getElementById("contact_edit").style.display = "inline";
         document.getElementById("edit_id").innerHTML = id;
 
-        get_value_request("database_fetch_name.php" + "?nameid=" + id, "name_edit");
-        get_value_request("database_fetch.php" + "?nameid=" + id, "phone_edit");
-        set_ready();
+        get_value_request("database_fetch_name.php" + "?nameid=" + id, "name_edit",false);
+        get_value_request("database_fetch.php" + "?nameid=" + id, "phone_edit",false);
     }
 
     //function to open and close the add contact panel
@@ -115,6 +129,7 @@
             image.src = "img/add_clicked2.png";
             image.alt = "1";
             image.title = "Close add contact";
+            generate_drop_down();
         } else {
             add_contact.style.display = "none";
             image.src = "img/add2.png";
@@ -211,6 +226,8 @@
             <p>
             <label for="phone">Phone: </label>
             <input title='Insert contact number' id="phone" name="phone"/>
+            </p>
+            <p id="drop_down_list">
             </p>
             <button title='Add contact' id="add_button" onclick="addcontactdatabase()">Add</button>
     </div>
