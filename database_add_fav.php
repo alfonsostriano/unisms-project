@@ -10,7 +10,6 @@ $owner = $_SESSION['id'];
 
 // Retrieve data from Query String
 $nameid = $_GET['nameid'];
-echo($nameid);
   // Escape User Input to help prevent SQL Injection
 $nameid = mysql_real_escape_string($nameid);
 
@@ -21,5 +20,5 @@ $query = "UPDATE `unisms`.`contacts` SET `favourite`=1 WHERE `contacts`.`id` = '
 
 mysql_query($query) or die(mysql_error());
 
-require_once('address_book_gen.php')
+require_once('address_book_gen.php');
 ?>

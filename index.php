@@ -30,8 +30,8 @@ if ($session) {
 
         <link rel="stylesheet" type="text/css" href="view.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="demo.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="address_book.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="login_panel/css/slide.css" media="screen" />
-  
         
         <link rel="apple-touch-icon" href="img/icon.png"/>
         <link rel="shortcut icon" href="img/favicon.ico"/>
@@ -67,7 +67,7 @@ if ($session) {
 
     </head>
 
-    <body onload="var add_contact = document.getElementById('add_contact'); add_contact.style.display = 'none'">
+    <body onload="var add_contact = document.getElementById('add_contact'); add_contact.style.display = 'none';">
 
         <div id="toppanel">
             <div id="panel">
