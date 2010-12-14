@@ -23,94 +23,115 @@
         return ajaxRequest;
     }
 
-    //function to handle the remove contact request
-    function remove_contact(name){
+    function get_innerHTML_request(url,domid) {
         var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
         ajaxRequest.onreadystatechange = function() {
             if(ajaxRequest.readyState == 4) {
                 var request = ajaxRequest.responseText;
-                document.getElementById('contacts_list').innerHTML = request;
+                document.getElementById(domid).innerHTML = request;
+                $(document).ready(function(){set_ready();});
             }
         }
-        var queryString = "?nameid=" + name;
-        ajaxRequest.open("GET", "database_remove.php" + queryString, true);
+        ajaxRequest.open("GET", url, true);
         ajaxRequest.send(null);
+    }
+    function get_value_request(url,domid) {
+        var ajaxRequest = build_ajaxRequest();
+        ajaxRequest.onreadystatechange = function() {
+            if(ajaxRequest.readyState == 4) {
+                var request = ajaxRequest.responseText;
+                document.getElementById(domid).value = request;
+                $(document).ready(function(){set_ready();});
+            }
+        }
+        ajaxRequest.open("GET", url, true);
+        ajaxRequest.send(null);
+    }
+
+    //function to handle the search request
+    function search(searchtext) {
+        get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list");
+        document.getElementById("contacts_list").style.padding = '0 0 0 20px';
+    }
+
+    function add_fav(name) {
+        get_innerHTML_request("database_add_fav.php" + "?nameid=" + name, "contacts_list");
+        set_ready();
+    }
+
+    //function to handle the remove contact request
+    function remove_contact(name){
+        get_innerHTML_request("database_remove.php" + "?nameid=" + name, "contacts_list");
+        set_ready();
     }
 
     //function to handle the remove all contacts request
     function remove_all_contacts() {
         var answer = confirm("Delete all Contacts?")
         if(answer) {
-            var ajaxRequest = build_ajaxRequest();
-            // Create a function that will receive data sent from the server
-            ajaxRequest.onreadystatechange = function() {
-                if(ajaxRequest.readyState == 4) {
-                    var request = ajaxRequest.responseText;
-                    document.getElementById('contacts_list').innerHTML = request;
-                }
-            }
-            ajaxRequest.open("GET", "database_removeAll.php", true);
-            ajaxRequest.send(null);
+            get_innerHTML_request("database_removeAll.php", "contacts_list");
+            set_ready();
         }
     }
 
-    function edit_contact(id) {
-        var contacts_list = document.getElementById("contacts_list");
-        var edit_contact = document.getElementById("contact_edit");
-        var name_edit = document.getElementById("name_edit");
-        var phone_edit = document.getElementById("phone_edit");
-        document.getElementById("edit_id").innerHTML = id;
-        contacts_list.style.display = "none";
-        edit_contact.style.display = "inline";
+    //function to handle the add contact request
+    function addcontactdatabase() {
+        var names = document.getElementById('names').value;
+        var phone = document.getElementById('phone').value;
 
-        //Get Name
-        var ajaxRequest2 = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest2.onreadystatechange = function() {
-            if(ajaxRequest2.readyState == 4) {
-                var request = ajaxRequest2.responseText;
-                name_edit.value = request;
-            }
-        }
-        var queryString = "?nameid=" + id;
-        ajaxRequest2.open("GET", "database_fetch_name.php" + queryString, true);
-        ajaxRequest2.send(null);
-
-        //Get Number
-        var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function() {
-            if(ajaxRequest.readyState == 4) {
-                var request = ajaxRequest.responseText;             
-                phone_edit.value = request;
-            }
-        }
-        var queryString = "?nameid=" + id;
-        ajaxRequest.open("GET", "database_fetch.php" + queryString, true);
-        ajaxRequest.send(null);
+        get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone,"contacts_list");
+        document.getElementById('names').value = "";
+        document.getElementById('phone').value = "";
+        set_ready();
     }
+
+    //Function to handle the edit request
     function submit_contact_edit() {
-        var contacts_list = document.getElementById("contacts_list");
-        var edit_contact = document.getElementById("contact_edit");
         var name_edit = document.getElementById("name_edit").value;
         var phone_edit = document.getElementById("phone_edit").value;
         var edit_id = document.getElementById("edit_id").innerHTML;
-        var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function() {
-            if(ajaxRequest.readyState == 4) {
-                var request = ajaxRequest.responseText;
-                document.getElementById('contacts_list').innerHTML = request;
-            }
-        }
-
-        var queryString = "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id;
-        ajaxRequest.open("GET", "database_edit.php" + queryString, true);
-        ajaxRequest.send(null);
-        contacts_list.style.display = "inline";
-        edit_contact.style.display = "none";
+        document.getElementById("message_list").style.display = "inline";
+        document.getElementById("contact_edit").style.display = "none";
+        get_innerHTML_request("database_edit.php" + "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id, "contacts_list");
+        set_ready();
     }
+
+    function edit_contact(id) {
+        document.getElementById("message_list").style.display = "none";
+        document.getElementById("contact_edit").style.display = "inline";
+        document.getElementById("edit_id").innerHTML = id;
+
+        get_value_request("database_fetch_name.php" + "?nameid=" + id, "name_edit");
+        get_value_request("database_fetch.php" + "?nameid=" + id, "phone_edit");
+        set_ready();
+    }
+
+    //function to open and close the add contact panel
+    function addContact() {
+        var image = document.getElementById('contact_button');
+        var add_contact = document.getElementById('add_contact');
+        if(image.alt == 0) {
+            add_contact.style.display = "inline";
+            image.src = "img/add_clicked2.png";
+            image.alt = "1";
+            image.title = "Close add contact";
+        } else {
+            add_contact.style.display = "none";
+            image.src = "img/add2.png";
+            image.alt = "0";
+            image.title = "Open add contact";
+        }
+    }
+
+    function addGoogle(number) {
+        var telephone = document.getElementById('telephone');
+        if(telephone.value == '') {
+            telephone.value = number;
+        } else {
+            telephone.value += ', ' + number;
+        }
+    }
+
     //function to handle a get number request
     function getNumber(name) {
         var ajaxRequest = build_ajaxRequest();
@@ -131,113 +152,30 @@
         ajaxRequest.send(null);
     }
 
-    //function to open and close the add contact panel
-    function addContact() {
-        var image = document.getElementById('contact_button');
-        var add_contact = document.getElementById('add_contact');
-        if(image.alt == 0) {
-            add_contact.style.display = "inline";
-            image.src = "img/add_clicked2.png";
-            image.alt = "1";
-            image.title = "Close add contact";
-        } else {
-            add_contact.style.display = "none";
-            image.src = "img/add2.png";
-            image.alt = "0";
-            image.title = "Open add contact";
-        }
-    }
-    
-    
-
-    //function to handle the add contact request
-    function addcontactdatabase() {
-        var ajaxRequest;  // The variable that makes Ajax possible!
-        var names = document.getElementById('names').value;
-        var phone = document.getElementById('phone').value;
-        document.getElementById('names').value = "";
-        document.getElementById('phone').value = "";
-        var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function() {
-            if(ajaxRequest.readyState == 4) {
-                var request = ajaxRequest.responseText;
-                document.getElementById('contacts_list').innerHTML = request;
-            }
-        }
-        var queryString = "?names=" + names + "&phone=" + phone;
-        ajaxRequest.open("GET", "database_add.php" + queryString, true);
-        ajaxRequest.send(null);
-          $(".msg_body").hide();
+    function set_ready() {
+        $(".msg_body").hide();
         //toggle the componenet with class msg_body
         $(".msg_head").click(function(){
-          $(this).next(".msg_body").slideToggle(300);
+            $(this).next(".msg_body").slideToggle(300);
         });
     }
-    
-    function add_fav(name) {
-        var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function() {
-            if(ajaxRequest.readyState == 4) {
-                var request = ajaxRequest.responseText;
-                document.getElementById('contacts_list').innerHTML = request;
-            }
-        }
-        var queryString = "?nameid=" + name;
-        ajaxRequest.open("GET", "database_add_fav.php" + queryString, true);
-        ajaxRequest.send(null);
-          $(".msg_body").hide();
-      //toggle the componenet with class msg_body
-      $(".msg_head").click(function(){
-        $(this).next(".msg_body").slideToggle(300);
-      });
-      }
 
-    //function to handle the search request
-    function search(searchtext) {
-        var ajaxRequest = build_ajaxRequest();
-        // Create a function that will receive data sent from the server
-        ajaxRequest.onreadystatechange = function() {
-            if(ajaxRequest.readyState == 4) {
-                var request = ajaxRequest.responseText;
-                document.getElementById("contacts_list").innerHTML = request;
-
-            }
-        }
-        var queryString = "?search=" + searchtext;
-        ajaxRequest.open("GET", "database_search.php" + queryString, true);
-        ajaxRequest.send(null);
-    }
-
-    function addGoogle(number) {
-        var telephone = document.getElementById('telephone');
-        if(telephone.value == '') {
-            telephone.value = number;
-        } else {
-            telephone.value += ', ' + number;
-        }
-    }
-    
-
-</script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-	//hide the all of the element with class msg_body
-	$(".msg_body").hide();
-	//toggle the componenet with class msg_body
-	$(".msg_head").click(function(){
-		$(this).next(".msg_body").slideToggle(300);
-	});
-});
+    $(document).ready(function(){
+            set_ready();
+        });
 </script>
 
 <div id="add_book">
     <div id="AB_header">
-        <div id="search">
-            <input title="Search contact" type="text" id="searchbox" name="searchbox" value="  ...search" onblur='if(this.value == "") {this.value = "  ...search";search("")}' onclick='if(this.value == "  ...search"){this.value = ""}' onkeyup="search(this.value)"/>
-        </div>
+            <img src="img/search.png" alt="spotlight">
+            <input title="Search contact" type="text" id="searchbox" name="searchbox" value="  ...search"
+                   onblur='if(this.value == "") {this.value = "  ...search";
+                        search("");
+                        get_innerHTML_request("address_book_gen.php","contacts_list")}
+                        document.getElementById("contacts_list").style.padding = "0";'
+
+                   onclick='if(this.value == "  ...search"){this.value = ""};'
+                   onkeyup="search(this.value)"/>
     </div>
     <div id="contatcs_page">
         <?php
@@ -259,18 +197,6 @@ $(document).ready(function(){
                  <?php
                     require_once('address_book_gen.php');
                  ?>
-                <div id="contact_edit">
-                    <p>
-                    <label for="names">Name: </label>
-                    <input title='Insert contact name' id="name_edit" name="names"/>
-                    </p>
-                    <p>
-                    <label for="phone">Phone: </label>
-                    <input title='Insert contact number' id="phone_edit" name="phone"/>
-                    </p>
-                    <div id="edit_id"></div>
-                    <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
-                </div>
         </div>
     </div>
     <div id="AB_footer">
