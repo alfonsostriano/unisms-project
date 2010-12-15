@@ -1,6 +1,6 @@
 /* general reset area for this page */
 
-html,body,h1, p,input,fieldset,legend                     {margin: 0;padding: 0;}
+/*html,body,h1, p,input,fieldset,legend                     {margin: 0;padding: 0;}*/
 
 /* beauty style */
 
@@ -512,7 +512,7 @@ h1{
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 
 .info:before {

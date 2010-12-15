@@ -78,14 +78,20 @@
 
     function generate_drop_down() {
         get_innerHTML_request("database_droplist.php", "drop_down_list",false);
+        get_innerHTML_request("database_droplist.php", "")
     }
 
     //function to handle the add contact request
     function addcontactdatabase() {
         var names = document.getElementById('names').value;
         var phone = document.getElementById('phone').value;
-
-        get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone,"contacts_list",true);
+        var select = document.getElementById('select_group');
+        var group = select.options[select.selectedIndex].value;
+        if(group == 'other') {
+           group = document.getElementById('new_group').value;
+        }
+        get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone + "&group=" + group,"contacts_list",true);
+        generate_drop_down();
         document.getElementById('names').value = "";
         document.getElementById('phone').value = "";
         document.getElementById('new_group').value = "";
@@ -106,9 +112,14 @@
         var name_edit = document.getElementById("name_edit").value;
         var phone_edit = document.getElementById("phone_edit").value;
         var edit_id = document.getElementById("edit_id").innerHTML;
+        var select = document.getElementById('select_group');
+        var group = select.options[select.selectedIndex].value;
+        if(group == 'other') {
+           group = document.getElementById('new_group').value;
+        }
         document.getElementById("message_list").style.display = "inline";
         document.getElementById("contact_edit").style.display = "none";
-        get_innerHTML_request("database_edit.php" + "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id, "contacts_list",true);
+        get_innerHTML_request("database_edit.php" + "?names=" + name_edit + "&phone=" + phone_edit + "&edit_id=" + edit_id + "&group=" + group, "contacts_list",true);
     }
 
     function edit_contact(id) {
@@ -126,13 +137,13 @@
         var add_contact = document.getElementById('add_contact');
         if(image.alt == 0) {
             add_contact.style.display = "inline";
-            image.src = "img/add_clicked2.png";
+            image.src = "img/add3_clicked.png";
             image.alt = "1";
             image.title = "Close add contact";
             generate_drop_down();
         } else {
             add_contact.style.display = "none";
-            image.src = "img/add2.png";
+            image.src = "img/add3.png";
             image.alt = "0";
             image.title = "Open add contact";
         }
@@ -171,7 +182,7 @@
         $(".msg_body").hide();
         //toggle the componenet with class msg_body
         $(".msg_head").click(function(){
-            $(this).next(".msg_body").slideToggle(300);
+            $(this).next(".msg_body").slideToggle(200);
         });
     }
 
@@ -179,7 +190,7 @@
             set_ready();
         });
 </script>
-
+<?php require_once("auto_generate_AB.php"); ?>
 <div id="add_book">
     <div id="AB_header">
             <img src="img/search.png" alt="spotlight">
@@ -193,21 +204,6 @@
                    onkeyup="search(this.value)"/>
     </div>
     <div id="contatcs_page">
-        <?php
-            session_name('tzLogin');
-            // Starting the session
-            session_start();
-            $id = $_SESSION['id'];
-            // Make a MySQL Connection
-            require_once 'connect.php';
-
-            $alphabetically_sort = "ALTER TABLE `contacts` ORDER BY `names`";
-            $qry_result = mysql_query($alphabetically_sort) or die(mysql_error());
-            // Retrieve all the data from the "example" table
-            $list_retrieve = mysql_query("SELECT * FROM contacts WHERE owner = '$id'")
-            or die(mysql_error());
-        ?>
-
         <div id="contacts_list">
                  <?php
                     require_once('address_book_gen.php');
@@ -215,8 +211,11 @@
         </div>
     </div>
     <div id="AB_footer">
-        <img title="Open add contact" id="contact_button" src="img/add2.png" alt="0" onclick="addContact()" />
+        <img title="Open add contact" id="contact_button" src="img/add3.png" alt="0" onclick="addContact()" />
         <img title="Delete all contacts" id="contact_button" src="img/trash.png" alt="trash" onclick="remove_all_contacts()"/>
+        <img title="Add Group" id="contact_button" src="img/add_group.png" alt="add_group"/>
+        <img title="Delete Group" id="contact_button" src="img/delete_group.png" alt="delete_group"/>
+        <img title="Statistics" id="contact_button" src="img/stats.png" alt="stats"/>
     </div>
     <div id="add_contact">
             <p>

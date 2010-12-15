@@ -48,7 +48,7 @@
 }
 
 #AB_header {
-    padding: 1.3em 0.5em 0.5em 0.5em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
     height: 8%;
     -webkit-border-top-left-radius: 10px;
     -moz-border-radius-topleft: 10px;
@@ -62,28 +62,29 @@
 
 #AB_header img {
     margin-left: 3px;
-    margin-top: -10px;
+    margin-top: -4px;
 }
 
 #searchbox {
     font-size: 1em;
-    width: 245px;
-    margin-top: -5px;
-    padding: 3px;
+    width: 180px;
+    padding: 3px 5px;
     border-style: 1px;
-    border-color: #828282;
-    border-style: solid;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
+    border-color: #bfbfbf;
+    border-style: inset;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    display: inline;
+    float: left;
 }
 
 #contacts_list {
     font-size: medium;
     width: 100%;
-    height: 77%;
+    height: 80%;
     display: inline;
     float: left;
-    overflow: auto;
+    overflow-y: scroll;
   }
 
 #contacts_list h5{
@@ -117,7 +118,7 @@
 #AB_footer {
     padding-top: 0.2em;
     height: 8%;
-    margin-top: 78%;
+    margin-top: 81%;
     background: #cfe7fa; /* old browsers */
     background: -moz-linear-gradient(top, #D5E1DD 0%, #747E80 100%); /* firefox */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#D5E1DD), color-stop(100%,#747E80)); /* webkit */
@@ -159,7 +160,7 @@
 
 /************************************BUTTONS***********************************/
 #contact_button {
-    margin-left: 6px;
+    margin-left: 10px;
 }
 
 #add_button {

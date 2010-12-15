@@ -6,11 +6,13 @@ session_name('tzLogin');
 session_start();
 $owner = $_SESSION['id'];
 
+$query = "ALTER TABLE `contacts` ORDER BY `group`";
+$qry_result = mysql_query($query) or die(mysql_error());
+
 	//build query
 $query = "SELECT * FROM contacts WHERE owner = '$owner'";
 	//Execute query
 $qry_result = mysql_query($query) or die(mysql_error());
-
 
 
 $response = "";
@@ -34,7 +36,7 @@ $response .= "</div>";
 // CREATE THE FAVOURITE GROUP
 $response .= "<p class='msg_head'>FAV</p><div class='msg_body'>";
 
-$query_fav = "SELECT * FROM contacts WHERE favourite = 1";
+$query_fav = "SELECT * FROM contacts WHERE favourite = 1 AND owner = $owner";
 
 $qry_result = mysql_query($query_fav) or die(mysql_error());
 
@@ -42,11 +44,12 @@ while($list = mysql_fetch_array($qry_result)) {
     $name = $list['names'];
     $id = $list['id'];
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
+        $response .= "<img title='Remove from fav' id='fav_button' src='img/unfav.png' onclick='remove_fav(".$id.")'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
         $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
 }
 
-$query = "SELECT * FROM contacts WHERE owner = '".$owner."' ORDER BY `contacts`.`owner` ASC";
+$query = "SELECT * FROM contacts WHERE owner = $owner";
 	//Execute query
 $qry_result = mysql_query($query) or die(mysql_error());
 
