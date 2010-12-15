@@ -12,7 +12,7 @@ $mail->PluginDir = 'phpmailer/';
 $mail->IsSMTP(); // telling the class to use SMTP
 
 try {
-  	$mail->Host       = "mail.lu.unisi.ch"; 	// SMTP server
+  	$mail->Host       = "mail.usi.ch"; 	// SMTP server
   	$mail->SMTPAuth   = true;                  // enable SMTP authentication
   	$mail->Port       = 25;                 	  
 	$mail->SMTPSecurity   = "ssl";

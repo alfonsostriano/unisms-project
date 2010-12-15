@@ -186,11 +186,21 @@
         });
     }
 
+    function change_to_fav_image(){
+        var image = document.getElementById('fav_button');
+        image.src = "img/fav.png";
+    }
+    
+    function change_to_unfav_image(id){
+        var image = document.getElementById('fav_button');
+        image.src = "img/unfav.png";
+    }
+    
     $(document).ready(function(){
             set_ready();
         });
 </script>
-<?php require_once("auto_generate_AB.php"); ?>
+<?php //require_once("auto_generate_AB.php"); ?>
 <div id="add_book">
     <div id="AB_header">
             <img src="img/search.png" alt="spotlight">
