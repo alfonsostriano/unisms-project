@@ -26,7 +26,7 @@ while($list = mysql_fetch_array($qry_result)) {
     $name = $list['names'];
     $id = $list['id'];
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
-        $response .= "<img title='Add to fav' id='fav_button' src='img/fav.png' onclick='add_fav(".$id.")'/>";
+        $response .= "<img title='Add to fav' id='fav_button' src='img/unfav.png' onclick='add_fav(".$id.")'onMouseOver='change_to_fav_image()' onMouseOut='change_to_unfav_image()'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
         $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
 
@@ -44,7 +44,7 @@ while($list = mysql_fetch_array($qry_result)) {
     $name = $list['names'];
     $id = $list['id'];
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
-        $response .= "<img title='Remove from fav' id='fav_button' src='img/unfav.png' onclick='remove_fav(".$id.")'/>";
+        $response .= "<img title='Remove from fav' id='fav_button' src='img/fav.png' onclick='remove_fav(".$id.")' onMouseOver='change_to_unfav_image()' onMouseOut='change_to_fav_image()'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
         $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
 }
@@ -67,12 +67,12 @@ while($list = mysql_fetch_array($qry_result)) {
         $response .= "</div>";
         $response .= "<p class='msg_head'>".$group."</p><div class='msg_body'>";
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
-        $response .= "<img title='Add to fav' id='fav_button' src='img/fav.png' onclick='add_fav(".$id.")'/>";
+        $response .= "<img title='Add to fav' id='fav_button' src='img/unfav.png' onclick='add_fav(".$id.")' onMouseOver='change_to_fav_image()' onMouseOut='change_to_unfav_image()'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
         $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
     } else {
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
-        $response .= "<img title='Add to fav' id='fav_button' src='img/fav.png' onclick='add_fav(".$id.")'/>";
+        $response .= "<img title='Add to fav' id='fav_button' src='img/fav.png' onclick='add_fav(".$id.")' onMouseOver='change_to_fav_image()' onMouseOut='change_to_unfav_image()'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
         $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
     }
@@ -85,6 +85,7 @@ $response .= '<div id="contact_edit">
                     <div id="edit_id"></div>
                     <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
               </div>';
-include ('google.php');
 echo $response;
+include ('google.php');
+
 ?>

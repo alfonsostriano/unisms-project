@@ -60,15 +60,23 @@ require_once 'Zend/Loader.php';
                 } catch (Exception $e) {
                   die('ERROR:' . $e->getMessage());  
                 }
+                
+                echo "<p class='msg_head'>Google Contacts</p><div class='msg_body'>";
             foreach ($results as $r) {
                 $name = $r->name;
                 $number = $r->phoneNumber;
                 if(count($number) != 0){
                   $i = 1;
+                  
                   foreach($number as $current_number){
-                    echo "<h4 id='contact_name' onclick='addGoogle($current_number)'>" . $name . "$i</h4>";
-                    echo "<img id='delete_button' src='img/google_ico.png'>";
+                    if($current_number != ""){
+                      echo "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='addGoogle($current_number)'>" . $name . "</h5>";
+                      echo "<img id='google_ico' src='img/google_ico.png'></div>";
+                    }
                     $i++;
                   }
+                  
                 }
             }
+            echo "</div>";
+            
