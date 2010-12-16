@@ -21,8 +21,11 @@ $phone = mysql_real_escape_string($phone);
 $edit_id = mysql_real_escape_string($edit_id);
 $group = mysql_real_escape_string($group);
 
-	//build query
-$query = "UPDATE `unisms`.`contacts` SET `names` = '".$names."', `phone`= '".$phone."', `group`= '".$group."' WHERE `contacts`.`id` = '".$edit_id."';";
+if ($group == 'none') {
+    $query = "UPDATE `unisms`.`contacts` SET `names` = '".$names."', `phone`= '".$phone."', `group`= NULL WHERE `contacts`.`id` = '".$edit_id."';";
+} else {
+    $query = "UPDATE `unisms`.`contacts` SET `names` = '".$names."', `phone`= '".$phone."', `group`= '".$group."' WHERE `contacts`.`id` = '".$edit_id."';";
+}
 	//Execute query
 $qry_result = mysql_query($query) or die(mysql_error());
 

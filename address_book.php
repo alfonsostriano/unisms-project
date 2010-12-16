@@ -76,9 +76,17 @@
         }
     }
 
-    function generate_drop_down() {
-        get_innerHTML_request("database_droplist.php", "drop_down_list",false);
-        get_innerHTML_request("database_droplist.php", "")
+    function generate_drop_down(number) {
+        if(number == 0) {
+            get_innerHTML_request("database_droplist.php", "drop_down_list",false);
+        } else {
+            get_innerHTML_request("database_droplist.php", "drop_down_list2",false);
+        }
+    }
+
+    function cancel_contact_edit() {
+        document.getElementById("message_list").style.display = "inline";
+        document.getElementById("contact_edit").style.display = "none";
     }
 
     //function to handle the add contact request
@@ -91,7 +99,7 @@
            group = document.getElementById('new_group').value;
         }
         get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone + "&group=" + group,"contacts_list",true);
-        generate_drop_down();
+        generate_drop_down(0);
         document.getElementById('names').value = "";
         document.getElementById('phone').value = "";
         document.getElementById('new_group').value = "";
@@ -126,7 +134,7 @@
         document.getElementById("message_list").style.display = "none";
         document.getElementById("contact_edit").style.display = "inline";
         document.getElementById("edit_id").innerHTML = id;
-
+        generate_drop_down(1);
         get_value_request("database_fetch_name.php" + "?nameid=" + id, "name_edit",false);
         get_value_request("database_fetch.php" + "?nameid=" + id, "phone_edit",false);
     }
@@ -140,7 +148,7 @@
             image.src = "img/add3_clicked.png";
             image.alt = "1";
             image.title = "Close add contact";
-            generate_drop_down();
+            generate_drop_down(0);
         } else {
             add_contact.style.display = "none";
             image.src = "img/add3.png";
@@ -186,13 +194,11 @@
         });
     }
 
-    function change_to_fav_image(){
-        var image = document.getElementById('fav_button');
+    function change_to_fav_image(image){
         image.src = "img/fav.png";
     }
     
-    function change_to_unfav_image(id){
-        var image = document.getElementById('fav_button');
+    function change_to_unfav_image(image){
         image.src = "img/unfav.png";
     }
     
@@ -220,11 +226,12 @@
                  ?>
         </div>
     </div>
+    <div id="stats">
+
+    </div>
     <div id="AB_footer">
         <img title="Open add contact" id="contact_button" src="img/add3.png" alt="0" onclick="addContact()" />
         <img title="Delete all contacts" id="contact_button" src="img/trash.png" alt="trash" onclick="remove_all_contacts()"/>
-        <img title="Add Group" id="contact_button" src="img/add_group.png" alt="add_group"/>
-        <img title="Delete Group" id="contact_button" src="img/delete_group.png" alt="delete_group"/>
         <img title="Statistics" id="contact_button" src="img/stats.png" alt="stats"/>
     </div>
     <div id="add_contact">

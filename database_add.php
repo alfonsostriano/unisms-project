@@ -18,8 +18,11 @@ $names = mysql_real_escape_string($names);
 $phone = mysql_real_escape_string($phone);
 $group = mysql_real_escape_string($group);
 
-$query = "INSERT INTO `unisms`.`contacts` (`id`, `names`, `phone`, `owner`, `group`, `favourite`) VALUES (NULL, '".$names."', '".$phone."', '".$owner."', '".$group."', '0')";
-
+if($group == 'none') {
+    $query = "INSERT INTO `unisms`.`contacts` (`id`, `names`, `phone`, `owner`, `group`, `favourite`) VALUES (NULL, '".$names."', '".$phone."', '".$owner."', NULL, '0')";
+} else {
+    $query = "INSERT INTO `unisms`.`contacts` (`id`, `names`, `phone`, `owner`, `group`, `favourite`) VALUES (NULL, '".$names."', '".$phone."', '".$owner."', '".$group."', '0')";
+}
 	//Execute query
 $qry_result = mysql_query($query) or die(mysql_error());
 
