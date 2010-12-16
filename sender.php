@@ -12,14 +12,22 @@ if(!defined('INCLUDE_CHECK')) die('You are not allowed to execute this file dire
 	var numMessages = parseInt(len/max) + 1;
 	var countChar = len % max;
 	document.getElementById("counter").innerHTML = countChar + "/" + numMessages;
-}
+  }
+  
+  function reset_form(){
+    document.getElementById('telephone').value = "";
+    document.getElementById('sms').value = "";
+  }
 </script>
+
+<script src="javascripts/ajaxsbmt.js" type="text/javascript"></script>
+
 
 <div id="page">
 
 <fieldset>
 
-<form action="sms.php" method="post" id="send_sms">
+<form method="post" id="send_sms"  action="sms.php" onsubmit="xmlhttpPost('sms.php', 'send_sms', 'notifications', 'Wait...'); reset_form();return false;">
 
   
   <?php
@@ -56,14 +64,17 @@ if(!defined('INCLUDE_CHECK')) die('You are not allowed to execute this file dire
 	</p>
 	<p>	<a id="counter">0/1</a></p>
 	<p class="submit">
-		<input type="submit" value="Send message" id="send" />
+		<input type="submit" value="Send message" id="send" onclick="submit_form()" />
 	</p>
 </form>
 </fieldset> 
 
 </div>
 
- <div class="notification info"> 
+
+          
+<div id="notifications">
+    <div class="notification info"> 
             <span></span> 
              <div class="text">
              <?php
@@ -72,12 +83,13 @@ if(!defined('INCLUDE_CHECK')) die('You are not allowed to execute this file dire
                 $result = mysql_fetch_array($query_result);
                 $last_comunication = $result['contents'];
                 echo "<p><strong>Information:</strong>" . $last_comunication ."</p>"; 
-                
+         
              ?>
              
 
             </div> 
-          </div> 
+</div>    
+</div>
           
 <div class="slide-out-div">
     <a class="handle" href="#">Content</a>
