@@ -16,11 +16,12 @@ $(document).ready(function() {
 		$("#toggle a").toggle();
 	});		
 	
+	// Close the notificaton
 	$('.notification span').click(function() {
 	   jQuery(this).parents('.notification').fadeOut(800);
 	});
 	
-	
+	// Change the cursor
 	$('.notification').hover(function() {
     jQuery(this).css('cursor','pointer');
   }, function() {
