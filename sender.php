@@ -17,6 +17,8 @@ if(!defined('INCLUDE_CHECK')) die('You are not allowed to execute this file dire
   function reset_form(){
     document.getElementById('telephone').value = "";
     document.getElementById('sms').value = "";
+    //setTimeout("document.getElementById('notifications').innerHTML = ''",50);
+    
   }
 </script>
 

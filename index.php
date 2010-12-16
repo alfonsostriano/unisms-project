@@ -32,13 +32,14 @@ if ($session) {
         <link rel="stylesheet" type="text/css" href="demo.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="address_book.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="login_panel/css/slide.css" media="screen" />
-        
+
         <link rel="apple-touch-icon" href="img/icon.png"/>
         <link rel="shortcut icon" href="img/favicon.ico"/>
 
-        <script src="javascripts/prototype.js" type="text/javascript"></script>
-        <script src="javascripts/scriptaculous.js" type="text/javascript"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+        <script type='text/javascript' src='admin/js/jquery-1.4.2.min.js'></script> <!-- jquery library --> 
+        <script type='text/javascript' src='admin/js/jquery-ui-1.8.5.custom.min.js'></script> <!-- jquery UI -->
+
         <script type="text/javascript" src="login_panel/js/slide.js" type="text/javascript"></script>
         <script type="text/javascript" src="http://tab-slide-out.googlecode.com/files/jquery.tabSlideOut.v1.3.js"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -60,6 +61,8 @@ if ($session) {
                 });
 
             });
+            
+            
         </script>
         
         
