@@ -193,6 +193,20 @@
             $(this).next(".msg_body").slideToggle(200);
         });
     }
+    
+    function close_notification(){
+          // Close the notificaton
+    $('.notification span').click(function() {
+       jQuery(this).parents('.notification').fadeOut(800);
+    });
+  
+  // Change the cursor
+    $('.notification').hover(function() {
+      jQuery(this).css('cursor','pointer');
+    }, function() {
+      jQuery(this).css('cursor','auto');
+    }); // Close notifications
+    }
 
     function change_to_fav_image(image){
         image.src = "img/fav.png";
@@ -204,7 +218,8 @@
     
     $(document).ready(function(){
             set_ready();
-        });
+            close_notification();
+     });
 </script>
 <?php //require_once("auto_generate_AB.php"); ?>
 <div id="add_book">

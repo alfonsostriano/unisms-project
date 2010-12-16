@@ -1,12 +1,5 @@
-//##################################################################################
-//## FORM SUBMIT WITH AJAX                                                        ##
-//## @Author: Simone Rodriguez aka Pukos <http://www.SimoneRodriguez.com>         ##
-//## @Version: 1.2                                                                ##
-//## @Released: 28/08/2007                                                        ##
-//## @License: GNU/GPL v. 2 <http://www.gnu.org/copyleft/gpl.html>                ##
-//##################################################################################
-
-
+
+
 function xmlhttpPost(strURL,formname,responsediv,responsemsg) {
     var xmlHttpReq = false;
     var self = this;
@@ -23,7 +16,7 @@ function xmlhttpPost(strURL,formname,responsediv,responsemsg) {
     self.xmlHttpReq.onreadystatechange = function() {
         if (self.xmlHttpReq.readyState == 4) {
 			// Quando pronta, visualizzo la risposta del form
-            updatepage(self.xmlHttpReq.responseText,responsediv);
+            updatepage(self.xmlHttpReq.responseText,responsediv);            close_notification();
         }
 		else{
 			// In attesa della risposta del form visualizzo il msg di attesa
