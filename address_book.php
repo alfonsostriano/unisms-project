@@ -55,8 +55,7 @@
 
     //function to handle the search request
     function search(searchtext) {
-        get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list",true);
-        document.getElementById("contacts_list").style.padding = '0 0 0 20px';
+        get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list",false);
     }
 
     function add_fav(name) {
@@ -76,12 +75,16 @@
         }
     }
 
-    function generate_drop_down(number) {
-        if(number == 0) {
-            get_innerHTML_request("database_droplist.php", "drop_down_list",false);
+    function generate_drop_down(list) {
+        if(list == 'add') {
+            get_innerHTML_request("database_droplist.php" + "?list=" + list, "drop_down_list_add",false);
         } else {
-            get_innerHTML_request("database_droplist.php", "drop_down_list2",false);
+            get_innerHTML_request("database_droplist.php", "drop_down_list_edit",false);
         }
+    }
+
+    function delete_group(group) {
+        get_innerHTML_request("database_delete_group.php" + "?group=" + group, "contacts_list", true);
     }
 
     function cancel_contact_edit() {
@@ -93,26 +96,31 @@
     function addcontactdatabase() {
         var names = document.getElementById('names').value;
         var phone = document.getElementById('phone').value;
-        var select = document.getElementById('select_group');
+        var select = document.getElementById('select_group_add');
         var group = select.options[select.selectedIndex].value;
         if(group == 'other') {
-           group = document.getElementById('new_group').value;
+           group = document.getElementById('new_group_add').value;
         }
         get_innerHTML_request("database_add.php" + "?names=" + names + "&phone=" + phone + "&group=" + group,"contacts_list",true);
-        generate_drop_down(0);
         document.getElementById('names').value = "";
         document.getElementById('phone').value = "";
-        document.getElementById('new_group').value = "";
+        document.getElementById('new_group_add').value = "";
+        generate_drop_down('add');
     }
 
     //function to add the group input in the add form
-    function add_group_input() {
-        var select = document.getElementById('select_group');
+    function add_group_input(number) {
+        if(number == 0) {
+            var list = 'add';
+        } else {
+            var list = 'edit';
+        }
+        var select = document.getElementById('select_group_' + list);
         var group_choice = select.options[select.selectedIndex].value;
         if (group_choice == 'other') {
-            document.getElementById('add_form_new_group').style.display = "inline";
+            document.getElementById('add_form_new_group_' + list).style.display = "inline";
         } else {
-            document.getElementById('add_form_new_group').style.display = "none";
+            document.getElementById('add_form_new_group_' + list).style.display = "none";
         }
     }
     //Function to handle the edit request
@@ -120,10 +128,10 @@
         var name_edit = document.getElementById("name_edit").value;
         var phone_edit = document.getElementById("phone_edit").value;
         var edit_id = document.getElementById("edit_id").innerHTML;
-        var select = document.getElementById('select_group');
+        var select = document.getElementById('select_group_edit');
         var group = select.options[select.selectedIndex].value;
         if(group == 'other') {
-           group = document.getElementById('new_group').value;
+           group = document.getElementById('new_group_edit').value;
         }
         document.getElementById("message_list").style.display = "inline";
         document.getElementById("contact_edit").style.display = "none";
@@ -134,7 +142,7 @@
         document.getElementById("message_list").style.display = "none";
         document.getElementById("contact_edit").style.display = "inline";
         document.getElementById("edit_id").innerHTML = id;
-        generate_drop_down(1);
+        generate_drop_down('edit');
         get_value_request("database_fetch_name.php" + "?nameid=" + id, "name_edit",false);
         get_value_request("database_fetch.php" + "?nameid=" + id, "phone_edit",false);
     }
@@ -148,7 +156,7 @@
             image.src = "img/add3_clicked.png";
             image.alt = "1";
             image.title = "Close add contact";
-            generate_drop_down(0);
+            generate_drop_down('add');
         } else {
             add_contact.style.display = "none";
             image.src = "img/add3.png";
@@ -207,15 +215,27 @@
       jQuery(this).css('cursor','auto');
     }); // Close notifications
     }
+    
+     function change_to_del_image(image) {
+        image.src = "img/group_delete.png";
+    }
+    function change_to_undel_image(image) {
+        image.src = "img/group_undelete.png";
+    }
 
     function change_to_fav_image(image){
         image.src = "img/fav.png";
     }
-    
     function change_to_unfav_image(image){
         image.src = "img/unfav.png";
     }
-    
+    function change_to_del(image) {
+        image.src = "img/delete.png";
+    }
+    function change_to_undel(image) {
+        image.src = "img/undelete.png";
+    }
+
     $(document).ready(function(){
             set_ready();
             close_notification();
@@ -224,13 +244,12 @@
 <?php //require_once("auto_generate_AB.php"); ?>
 <div id="add_book">
     <div id="AB_header">
-            <img src="img/search.png" alt="spotlight">
+            <img title="Delete Search Entry"src="img/search_delete.png" alt="spotlight"
+                 onclick='document.getElementById("searchbox").value = "  ...search";
+                          get_innerHTML_request("address_book_gen.php","contacts_list",true);'
+                 onMouseOver='this.src = "img/search_undelete.png";' onMouseOut='this.src = "img/search_delete.png";'>
             <input title="Search contact" type="text" id="searchbox" name="searchbox" value="  ...search"
-                   onblur='if(this.value == "") {this.value = "  ...search";
-                        search("");
-                        get_innerHTML_request("address_book_gen.php","contacts_list")}
-                        document.getElementById("contacts_list").style.padding = "0";'
-
+                   onblur='if(this.value == "") {this.value = "  ...search";}'
                    onclick='if(this.value == "  ...search"){this.value = ""};'
                    onkeyup="search(this.value)"/>
     </div>
@@ -258,7 +277,7 @@
             <label for="phone">Phone: </label>
             <input title='Insert contact number' id="phone" name="phone"/>
             </p>
-            <p id="drop_down_list">
+            <p id="drop_down_list_add">
             </p>
             <button title='Add contact' id="add_button" onclick="addcontactdatabase()">Add</button>
     </div>

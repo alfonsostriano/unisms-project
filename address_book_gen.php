@@ -28,7 +28,7 @@ while($list = mysql_fetch_array($qry_result)) {
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
         $response .= "<img title='Add to fav' id='fav_button' src='img/unfav.png' onclick='add_fav(".$id.")'onMouseOver='change_to_fav_image(this)' onMouseOut='change_to_unfav_image(this)'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
-        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
+        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onMouseOver='change_to_undel(this)' onMouseOut='change_to_del(this)' onclick='remove_contact(".$id.")'/></div>";
 
 }
 $response .= "</div>";
@@ -46,7 +46,7 @@ while($list = mysql_fetch_array($qry_result)) {
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
         $response .= "<img title='Remove from fav' id='fav_button' src='img/fav.png' onclick='remove_fav(".$id.")' onMouseOver='change_to_unfav_image(this)' onMouseOut='change_to_fav_image(this)'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
-        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
+        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onMouseOver='change_to_undel(this)' onMouseOut='change_to_del(this)' onclick='remove_contact(".$id.")'/></div>";
 }
 
 $query = "SELECT * FROM contacts WHERE owner = $owner";
@@ -65,16 +65,16 @@ while($list = mysql_fetch_array($qry_result)) {
         $current_group = $group;
 
         $response .= "</div>";
-        $response .= "<p class='msg_head'>".$group."</p><div class='msg_body'>";
+        $response .= "<p class='msg_head'>".$group."<img title='Delete group' class='delete_group' src='img/group_delete.png' onclick='delete_group(\"$group\")' onMouseOver='change_to_undel_image(this)' onMouseOut='change_to_del_image(this)'></p><div class='msg_body'>";
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
         $response .= "<img title='Add to fav' id='fav_button' src='img/unfav.png' onclick='add_fav(".$id.")' onMouseOver='change_to_fav_image(this)' onMouseOut='change_to_unfav_image(this)'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
-        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
+        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onMouseOver='change_to_undel(this)' onMouseOut='change_to_del(this)' onclick='remove_contact(".$id.")'/></div>";
     } else {
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
         $response .= "<img title='Add to fav' id='fav_button' src='img/fav.png' onclick='add_fav(".$id.")' onMouseOver='change_to_fav_image(this)' onMouseOut='change_to_unfav_image(this)'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";
-        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onclick='remove_contact(".$id.")'/></div>";
+        $response .= "<img title='Delete contact' id='delete_button' src='img/delete.png' onMouseOver='change_to_undel(this)' onMouseOut='change_to_del(this)' onclick='remove_contact(".$id.")'/></div>";
     }
 }
 
@@ -83,10 +83,12 @@ $response .= '<div id="contact_edit">
                     <p><label for="names">Name: </label><input title="Insert contact name" id="name_edit" name="names"/></p>
                     <p><label for="phone">Phone: </label><input title="Insert contact number" id="phone_edit" name="phone"/></p>
                     <div id="edit_id"></div>
-                    <p id="drop_down_list2">
+                    <p id="drop_down_list_edit">
                     </p>
+                    <p id="edit_buttons">
                     <button title="Submit Changes" id="confirm_edit" onclick="submit_contact_edit()">Ok</button>
                     <button title="Cancel" id="cancel_edit" onclick="cancel_contact_edit()">Cancel</button>
+                    <p>
               </div>';
 echo $response;
 include ('google.php');
