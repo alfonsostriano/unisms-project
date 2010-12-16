@@ -15,9 +15,9 @@ try {
   	$mail->Host       = "mail.usi.ch"; 	// SMTP server
   	$mail->SMTPAuth   = true;                  // enable SMTP authentication
   	$mail->Port       = 25;                 	  
-	$mail->SMTPSecurity   = "ssl";
-	
-	$mail->CharSet="windows-1251";
+	  $mail->SMTPSecurity   = "ssl";
+	 
+	  $mail->CharSet="windows-1251";
 
 
 		$uname = $_SESSION['usr'];
@@ -31,6 +31,7 @@ try {
     if($save){
       $save = 1;
       $pass_to_save = $_POST["password"];
+      print_r($pass_to_save);
       mysql_query ("UPDATE tz_members SET save = '$save' WHERE id = $id");
       mysql_query ("UPDATE tz_members SET mailpass = '$pass_to_save' WHERE id = $id");      
     }
@@ -85,7 +86,15 @@ try {
   			} else{
   			  $query  = "UPDATE tz_members SET sms_counter=sms_counter+1 WHERE id = $id";
           mysql_query($query);
-  			  header("location:index.php");
+          echo "
+          <div class='notification success'> 
+            <span></span> 
+            <div class='text'> 
+              <p><strong>Message sent!</strong> Your message has been succesfully sent to ". $data ."</p> 
+            </div> 
+          </div>      
+          
+          ";
   			} 
   			
 		} 
@@ -103,14 +112,38 @@ try {
           $query  = "UPDATE tz_members SET sms_counter=sms_counter+1 WHERE id = $id";
           mysql_query($query);
 			}
-  			header("location:index.php");
+          echo "
+          <div class='notification success'> 
+            <span></span> 
+            <div class='text'> 
+              <p><strong>Message sent!</strong> Your message has been succesfully sent.</p> 
+            </div> 
+          </div>      
+          
+          ";
 		}
 		
 
 } catch (phpmailerException $e) {
-  echo $e->errorMessage(); //Pretty error messages from PHPMailer
+  echo "
+          <div class='notification error'> 
+            <span></span> 
+            <div class='text'> 
+              <p><strong>Error!</strong>" . $e->errorMessage() . "</p> 
+            </div>
+          </div>      
+          
+          ";
 } catch (Exception $e) {
-  echo $e->getMessage(); //Boring error messages from anything else!
+  echo "
+          <div class='notification error'> 
+            <span></span> 
+            <div class='text'> 
+              <p><strong>Error!</strong>" . $e->getMessage() . "</p> 
+            </div>
+          </div>      
+          
+          ";
 }
 
 ?>

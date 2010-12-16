@@ -375,7 +375,10 @@ h1{
 .success {
   border-top: 1px solid #edf7d0;
   border-bottom: 1px solid #b7e789;
-
+    width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
   background: #dff3a8;
   background: -moz-linear-gradient(top,#dff3a8,#c4fb92);
   background: -webkit-gradient(linear, left top, left bottom, from(#dff3a8), to(#c4fb92));
