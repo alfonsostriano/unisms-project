@@ -457,11 +457,11 @@ class PHPMailer {
     $address = trim($address);
     $name = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
     if (!self::ValidateAddress($address)) {
-      $this->SetError($this->Lang('invalid_address').': '. $address);
+      $this->SetError($this->Lang('invalid_address'));
       if ($this->exceptions) {
-        throw new phpmailerException($this->Lang('invalid_address').': '.$address);
+        throw new phpmailerException($this->Lang('invalid_address'));
       }
-      echo $this->Lang('invalid_address').': '.$address;
+      echo $this->Lang('invalid_address');
       return false;
     }
     if ($kind != 'ReplyTo') {
@@ -850,11 +850,25 @@ class PHPMailer {
   function SetLanguage($langcode = 'en', $lang_path = 'language/') {
     //Define full set of translatable strings
     $PHPMAILER_LANG = array(
-      'provide_address' => 'You must provide at least one recipient email address.',
+      'provide_address' => "
+	<div class='notification error'> 
+	            <span></span> 
+	            <div class='text'> 
+	              <p><strong>Error!</strong>You must provide at least one recipient email address.</p> 
+	            </div>
+	          </div>
+			",
       'mailer_not_supported' => ' mailer is not supported.',
       'execute' => 'Could not execute: ',
       'instantiate' => 'Could not instantiate mail function.',
-      'authenticate' => 'SMTP Error: Could not authenticate.',
+      'authenticate' => "
+	<div class='notification error'> 
+	            <span></span> 
+	            <div class='text'> 
+	              <p><strong>Error!</strong>Authentication failed. Maybe the password you entered is wrong.</p> 
+	            </div>
+	          </div>
+			",
       'from_failed' => 'The following From address failed: ',
       'recipients_failed' => 'SMTP Error: The following recipients failed: ',
       'data_not_accepted' => 'SMTP Error: Data not accepted.',
@@ -864,8 +878,22 @@ class PHPMailer {
       'encoding' => 'Unknown encoding: ',
       'signing' => 'Signing Error: ',
       'smtp_error' => 'SMTP server error: ',
-      'empty_message' => 'Message body empty',
-      'invalid_address' => 'Invalid address',
+      'empty_message' => "
+	<div class='notification error'> 
+	            <span></span> 
+	            <div class='text'> 
+	              <p><strong>Error!</strong>You must provide a message body.</p> 
+	            </div>
+	          </div>
+			",
+      'invalid_address' => "
+	<div class='notification error'> 
+	            <span></span> 
+	            <div class='text'> 
+	              <p><strong>Error!</strong>You must insert at least a number.</p> 
+	            </div>
+	          </div>
+			",
       'variable_set' => 'Cannot set or reset variable: '
     );
     //Overwrite language-specific strings. This way we'll never have missing translations - no more "language string failed to load"!
