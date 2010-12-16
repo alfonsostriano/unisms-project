@@ -18,7 +18,9 @@ $response = "<div><label for='drop_down'>Group: </label>";
 $response .= "<select title='Select group' id='select_group' name='drop_down' onchange='add_group_input()'>";
 $response .= "<option value='none'>None</option>";
 while ($row = mysql_fetch_array($qry_result)) {
-    $response .= "<option value='".$row[group]."'>".$row[group]."</option>";
+    if($row['group'] != '') {
+        $response .= "<option value='".$row[group]."'>".$row[group]."</option>";
+    }
 }
 $response .= "<option value='other'>other.. </option>";
 $response .= "</select></div>";
