@@ -4,7 +4,7 @@ require 'connect.php';
 session_name('tzLogin');
 // Starting the session
 session_start();
-$id = $_SESSION['id'];
+$owner = $_SESSION['id'];
 
 
 	// Retrieve data from Query String
