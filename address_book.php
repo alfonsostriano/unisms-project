@@ -58,10 +58,17 @@
         get_innerHTML_request("database_search.php" + "?search=" + searchtext, "contacts_list",false);
     }
 
+    // FAVOURITE GROUP FUNCTIONS -------------------------------------------------------------------//
     function add_fav(name) {
         get_innerHTML_request("database_add_fav.php" + "?nameid=" + name, "contacts_list",true);
     }
-
+    
+    function remove_fav(name) {
+        get_innerHTML_request("database_remove_fav.php" + "?nameid=" + name, "contacts_list",true);
+    }
+    
+    // --------------------------------------------------------------------------------------------//
+  
     //function to handle the remove contact request
     function remove_contact(name){
         get_innerHTML_request("database_remove.php" + "?nameid=" + name, "contacts_list",true);
