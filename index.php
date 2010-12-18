@@ -170,7 +170,9 @@ if ($session) {
                             <label class="grey" for="email">Password:</label>
                             <input class="field" type="password" name="password" id="password" size="23" />
 
-
+                            <label><input name="tos" id="tos" type="checkbox" checked="checked" value="1" /> &nbsp;I accept the <a href="tos.html">TOS</a></label>
+                            <div class="clear"></div>
+                            
                             <input type="submit" name="submit" value="Register" class="bt_register" />
                         </form>
                     </div>
