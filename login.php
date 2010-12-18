@@ -139,7 +139,9 @@ else if($_POST['submit']=='Register')
 		$err[]='Your email is not valid!';
 	}
 	
-  
+  if($_POST['tos'] != 1){
+    $err[]='You must accept the terms of service!';
+  }
   // If there are no errors we can insert the user in the database
 	if(!count($err))
 	{
@@ -148,17 +150,18 @@ else if($_POST['submit']=='Register')
 		$_POST['password'] = mysql_real_escape_string($_POST['password']);
 		$_POST['email'] = mysql_real_escape_string($_POST['email']);
 		$_POST['username'] = mysql_real_escape_string($_POST['username']);
+    $_POST['tos'] = mysql_real_escape_string($_POST['tos']);
 		
 		
-		mysql_query("INSERT INTO tz_members(usr,pass,email,regIP,dt)
+		mysql_query("INSERT INTO tz_members(usr,pass,email,regIP,dt,tos)
 						VALUES(
 						
 							'".$_POST['username']."',
 							'".md5($_POST['password'])."',
 							'".$_POST['email']."',
 							'".$_SERVER['REMOTE_ADDR']."',
-							NOW()
-							
+							NOW(),
+							'".$_POST['tos']."'
 						)");
 		
 		if(mysql_affected_rows($link)==1)
@@ -171,7 +174,7 @@ else if($_POST['submit']=='Register')
 		  $_SESSION['usr']=$uname;
       $_SESSION['id'] = $row['id'];
       $_SESSION['mail'] = $_POST['email'];
-      $_SESSION['rememberMe'] = "false";
+      $_SESSION['rememberMe'] = "true";
       
       // Store some data in the session
       
