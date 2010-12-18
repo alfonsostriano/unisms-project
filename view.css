@@ -8,6 +8,8 @@ body{
     padding:0;
     margin-top:15px;
     margin-bottom: 15px !important;
+    margin-left: 0px;
+    margin-right: 0px;
     font:76% sans-serif, verdana;
     background: #222 url(img/pat5.gif) /*repeat-x*/;
 }
