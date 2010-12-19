@@ -65,8 +65,6 @@ if(isset($_GET['stopsync']))
 
 
 
-
-
 if($_POST['submit']=='Login')
 {
 	// Checking whether the Login form has been submitted

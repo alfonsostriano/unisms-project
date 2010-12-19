@@ -191,6 +191,24 @@ padding:5px 15px;}
     width: 470px;
 }
 
+#facebook h3{
+   margin-top: 20px;
+   margin-left: 20px;
+}
+
+#facebook h1{
+   color:orange;
+   width: 220px;
+   margin-top: 20px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#facebook p{
+   text-justify: distribute;
+}
+
+
 #facebook:hover{
     -webkit-transition: all 0.5s ease-in;
     -moz-transition: all 0.5s ease-in;
