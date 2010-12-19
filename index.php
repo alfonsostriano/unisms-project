@@ -65,7 +65,16 @@ if ($session) {
             
         </script>
         
-        
+        <script type="text/javascript">
+            function tos(){
+            var html = "<h1>UNIsms Terms of Service</h1><h3>Preamble</h3><p>These Terms of Service describe the terms and conditions under which the administrators of the UNIsms service provide a service of message sending. Access to this Service is subject to compliance with these Terms of Service. Any user of this Service cannot access this Service without having previously been made aware of these Terms of Use and unreservedly agreed to them.</p>";
+            html += "<h3>Guaranties</h3><p>The Information contained in this Site can in no way have a contractual and / or official value.  Accordingly, you agree to use this service at your own risk. You assume all the costs of any service needed.</p>";
+            html += "<h3>Indemnification</h3><p>You agree to indemnify and guarantee UNIsms against any claim or action, losses, and expenses (including court fees) resulting from the violation of the Terms of Service, copyright infraction, or public order troubling.</p>";
+            html += "<h3>Contact</h3><p>For any questions or inquiries about our terms of service, you can contact us at marcello.romanelli@usi.ch</p>";
+            document.getElementById('facebook').innerHTML = html;
+            
+            }
+        </script>
 
 
     </head>
@@ -170,7 +179,8 @@ if ($session) {
                             <label class="grey" for="email">Password:</label>
                             <input class="field" type="password" name="password" id="password" size="23" />
 
-                            <label><input name="tos" id="tos" type="checkbox" checked="checked" value="1" /> &nbsp;I accept the <a href="tos.html">TOS</a></label>
+                            
+                            <label><input name="tos" id="tos" type="checkbox" checked="checked" value="1" /> &nbsp;I accept the <a href="#" onclick="tos()">TOS</a></label>
                             <div class="clear"></div>
                             
                             <input type="submit" name="submit" value="Register" class="bt_register" />
