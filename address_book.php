@@ -181,6 +181,25 @@
         }
     }
 
+    function multiplesend(name) {
+        var ajaxRequest = build_ajaxRequest();
+        // Create a function that will receive data sent from the server
+        ajaxRequest.onreadystatechange = function() {
+            if(ajaxRequest.readyState == 4) {
+                var telephone = document.getElementById('telephone');
+                var request = ajaxRequest.responseText;
+                if(telephone.value == '') {
+                    telephone.value = request;
+                } else {
+                    telephone.value += ', ' + request;
+                }
+            }
+        }
+        var queryString = "?group=" + name;
+        ajaxRequest.open("GET", "database_multiple_send.php" + queryString, true);
+        ajaxRequest.send(null);
+    }
+
     //function to handle a get number request
     function getNumber(name) {
         var ajaxRequest = build_ajaxRequest();
@@ -223,7 +242,7 @@
     }); // Close notifications
     }
     
-     function change_to_del_image(image) {
+    function change_to_del_image(image) {
         image.src = "img/group_delete.png";
     }
     function change_to_undel_image(image) {
@@ -273,7 +292,6 @@
     <div id="AB_footer">
         <img title="Open add contact" id="contact_button" src="img/add3.png" alt="0" onclick="addContact()" />
         <img title="Delete all contacts" id="contact_button" src="img/trash.png" alt="trash" onclick="remove_all_contacts()"/>
-        <img title="Statistics" id="contact_button" src="img/stats.png" alt="stats"/>
     </div>
     <div id="add_contact">
             <p>

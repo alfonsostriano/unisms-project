@@ -19,7 +19,7 @@ $response = "";
 
 
 // CREATE THE GROUP CONTAING ALL THE CONTACTS
-$response .= "<div id='message_list' class='msg_list'><p class='msg_head'>All Contacts</p><div class='msg_body'>";
+$response .= "<div id='message_list' class='msg_list'><p class='msg_head'>All Contacts <img class='multiple_send' title='Send Message To all contact in the group' src='img/add_group.png' onclick='multiplesend(\"all\")'></p><div class='msg_body'>";
 $groups = array();
 while($list = mysql_fetch_array($qry_result)) {
     $group = $list['group'];
@@ -34,7 +34,7 @@ while($list = mysql_fetch_array($qry_result)) {
 $response .= "</div>";
 
 // CREATE THE FAVOURITE GROUP
-$response .= "<p class='msg_head'>Favourite</p><div class='msg_body'>";
+$response .= "<p class='msg_head'>Favourite <img title='Send Message To all contact in the group' class='multiple_send' src='img/add_group.png' onclick='multiplesend(\"fav\")'></p><div class='msg_body'>";
 
 $query_fav = "SELECT * FROM contacts WHERE favourite = 1 AND owner = $owner";
 
@@ -65,7 +65,8 @@ while($list = mysql_fetch_array($qry_result)) {
         $current_group = $group;
 
         $response .= "</div>";
-        $response .= "<p class='msg_head'>".$group."<img title='Delete group' class='delete_group' src='img/group_delete.png' onclick='delete_group(\"$group\")' onMouseOver='change_to_undel_image(this)' onMouseOut='change_to_del_image(this)'></p><div class='msg_body'>";
+        $response .= "<p class='msg_head'>".$group."<img title='Send Message To all contact in the group' class='multiple_send' src='img/add_group.png' onclick='multiplesend(\"$group\")'>
+                      <img title='Delete group' class='delete_group' src='img/group_delete.png' onclick='delete_group(\"$group\")' onMouseOver='change_to_undel_image(this)' onMouseOut='change_to_del_image(this)'></p><div class='msg_body'>";
         $response .= "<div id='single_contact'><h5 title='Click to insert number' id='contact_name' onclick='getNumber(".$id.")'>" . $name . "</h5>";
         $response .= "<img title='Add to fav' id='fav_button' src='img/unfav.png' onclick='add_fav(".$id.")' onMouseOver='change_to_fav_image(this)' onMouseOut='change_to_unfav_image(this)'/>";
         $response .= "<img title='Edit contact' id='edit_button' src='img/edit.png' onclick='edit_contact(".$id.")'/>";

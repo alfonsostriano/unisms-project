@@ -232,7 +232,15 @@
 }
 
 .delete_group  {
-    margin-top: -8px;
+    margin-top: -5px;
+    margin-right: 4px;
     float: right;
     diplay: inline;
+}
+
+.multiple_send {
+    margin-top: -8px;
+    margin-right: 2px;
+    float: right;
+    display: inline
 }
