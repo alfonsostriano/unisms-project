@@ -63,6 +63,7 @@ try {
 
     // Then add each reciver
     foreach ($recievers as $number){
+      $number =  str_replace(" ","", str_replace("+", "00", $number));
 		  $mail->AddAddress($number.'@sms.switch.ch');
     }
     

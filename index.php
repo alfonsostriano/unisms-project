@@ -21,6 +21,7 @@ if ($session) {
    error_log($e);
  }
 }
+$url = $_SERVER['REQUEST_URI'];
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -74,39 +75,44 @@ if ($session) {
             document.getElementById('facebook').innerHTML = html;
             
             }
+
+      FB.logout(function(response) {
+      
+      });
+
         </script>
 
 
     </head>
 
     <body onload="var add_contact = document.getElementById('add_contact'); add_contact.style.display = 'none';">
-
         <div id="toppanel">
             <div id="panel">
                 <div class="content clearfix">
                    
                     
                     <?php
-                    if($me && !$_SESSION['id']){
-
-                         $query  = "SELECT FBid FROM tz_members";
-                         $query_result = mysql_query($query);
-                         $result = mysql_fetch_row($query_result);
-                        if (in_array($me[id], $result)) {
-                        if(!strpos($url,'iframe')){
-                        echo '<script language="javascript">alert("Ti sei collegato automaticamente con l\account facebook di '.$me[name].'. Per collegarti con un altro account, fai il logout da facebook.")</script>;';
-                          $query  = "SELECT usr, id, email, save FROM tz_members WHERE FBid='{$me[id]}'";
-                                               $query_result = mysql_query($query);
-                                               $result = mysql_fetch_row($query_result);
-                        $_SESSION['usr'] = $result[0];
-                        $_SESSION['id'] = $result[1];
-                        $_SESSION['mail'] = $result[2];
-                        $_SESSION['rememberMe'] = $result[3];}
-                        
-                        }
-                                                 
-                        
-                        }
+                  if($me && !$_SESSION['id']){
+                     $query  = "SELECT FBid FROM tz_members";
+                     $query_result = mysql_query($query);
+          while($r = mysql_fetch_array($query_result)){
+          if($me[id] == $r[0]){
+                    if(!strpos($url,'iframe')){
+                    echo '<script language="javascript">alert("Ti sei collegato con l\'account facebook di '.$me[name].'. Per collegarti con un altro account, fai il logout da facebook.")</script>;';}
+                    $query  = "SELECT usr, id, email, save FROM tz_members WHERE FBid='$me[id]'";
+                    $query_result = mysql_query($query);
+                    $result = mysql_fetch_row($query_result);
+                    $_SESSION['usr'] = $result[0];
+                    $_SESSION['id'] = $result[1];
+                    $_SESSION['mail'] = $result[2];
+                    $_SESSION['rememberMe'] = $result[3];
+                break;
+                    }
+                                             
+}
+}
+                    
+                    
                     if (!$_SESSION['id']):
                     ?>
                         <div class="left">
@@ -144,14 +150,12 @@ if ($session) {
                             <div class="clear"></div>
                             <input type="submit" name="submit" value="Login" class="bt_login" />
                         </form>
-                        <?php $url = $_SERVER['REQUEST_URI'];
-                    if(!strpos($url,'iframe') && !$me){?>
-                       <div>
-                      <fb:login-button></fb:login-button>
-                       </div>
-                    
-                       <?php }?>
-                    </div>
+            <?php
+            if(!strpos($url,'iframe') && !$me){?>
+      
+                <fb:login-button></fb:login-button>
+                <?php }?>
+                      </div>
 
                     <div class="left right">
                         <!-- Register Form -->
@@ -189,10 +193,14 @@ if ($session) {
 
 <?php
                         else:
-                          if($me){
+            $query  = "SELECT FBid FROM tz_members WHERE usr='{$_SESSION['usr']}'";
+                         $query_result = mysql_query($query);
+                         $result = mysql_fetch_row($query_result);
+                        if (!(in_array($me[id], $result)) && $me) {
                           mysql_query("UPDATE tz_members SET FBid ='$me[id].' WHERE usr='{$_SESSION['usr']}'");
+                        echo '<script language="javascript">alert("Questo account e l\'account facebook di '.$me[name].' sono stati collegati.")</script>;';
 
-                          }
+            }
 ?>
 
                         <div class="left">
@@ -248,7 +256,7 @@ if ($session) {
                     </div>
 
                     <div class="left right">
-                        <h1><a href="?logoff">Logout</a></h1>
+                        <h1><a href="?logoff" onclick="FB.logout();">Logout</a></h1>
                         <p>Exit the current session. Next time you'll try to login you'll have to reinsert your username and password</p>
                         <hr />
                         <h2><a href="?delete">DELETE ACCOUNT</a></h2>
@@ -293,42 +301,41 @@ if ($session) {
                             }
                             else{
 ?>
-  <div id="facebook">
-<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
-<script type="text/javascript">FB.init("4cdb821df2c0741721f683c820581a78");</script>
-<fb:fan profile_id="132505266801785" stream="1" connections="10" width="450"></fb:fan>
-<div style="font-size:8px; padding-left:10px">
-<a href="http://www.facebook.com/pages/SMSwitch-SMS-Gratis-per-studenti-USI/132505266801785">SMSwitch</a> on Facebook</div>
-</div>
+
+    <div id="facebook">
+  <script type="text/javascript">FB.init("165794976794246");</script>
+  <fb:fan profile_id="132505266801785" stream="1" connections="10" width="450"></fb:fan>
+  <div style="font-size:8px; padding-left:10px">
+  </div>
 
 <?php
 }
+
 ?>  
-  <div id="fb-root"></div>
-   <script>
-     window.fbAsyncInit = function() {
-       FB.init({
-         appId   : '<?php echo $facebook->getAppId(); ?>',
-         session : <?php echo json_encode($session); ?>, // don't refetch the session when PHP already has it
-         status  : true, // check login status
-         cookie  : true, // enable cookies to allow the server to access the session
-         xfbml   : true // parse XFBML
-       });
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId   : '<?php echo $facebook->getAppId(); ?>',
+          session : <?php echo json_encode($session); ?>, // don't refetch the session when PHP already has it
+          status  : true, // check login status
+          cookie  : true, // enable cookies to allow the server to access the session
+          xfbml   : true // parse XFBML
+        });
 
-       // whenever the user logs in, we refresh the page
-       FB.Event.subscribe('auth.login', function() {
-         window.location.reload();
-       });
-     };
+        // whenever the user logs in, we refresh the page
+        FB.Event.subscribe('auth.login', function() {
+          window.location.reload();
+        });
+      };
 
-     (function() {
-       var e = document.createElement('script');
-       e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-       e.async = true;
-       document.getElementById('fb-root').appendChild;
-     }());
-   </script>
-
-
+      (function() {
+        var e = document.createElement('script');
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    </script>
+  
     </body>
 </html>
