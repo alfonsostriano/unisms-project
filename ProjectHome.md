@@ -1,0 +1,1 @@
+A free sms sender for the swiss universities
